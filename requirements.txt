@@ -4,4 +4,4 @@
 # external requirements
 numpy
 pandas
-sklearn
+scikit-learn
