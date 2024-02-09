@@ -67,6 +67,9 @@ target/
 # Pycharm
 .idea
 
+# Minio
+.minio
+
 # VS Code
 .vscode/
 
