@@ -51,7 +51,6 @@ def main():
     # Assurez-vous d'exclure les départements d'outre-mer avant de convertir les codes postaux
     df = exclude_departments(df, exclude_drom_tom, "code_postal")
     df = convert_code_postal(df)
-    df = map_departement_code_to_name(df)  # Mappage des codes de département
     df = replace_candidate_names_with_parties(df, party_dict)  # Mappage des noms de candidats
 
     print(df.head())  # Affiche les premières lignes pour vérifier le résultat
