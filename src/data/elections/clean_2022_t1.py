@@ -10,21 +10,18 @@ from src.data.utils.constants import rename_election_columns
 # Function to load data from a CSV file into a pandas DataFrame
 def load_data(filepath):
     df = pd.read_csv(filepath, low_memory=False)
-    print("Data loaded:", df.shape)
     return df
 
 
 # Function to remove specified columns from the DataFrame
 def remove_columns(df, columns):
     df = df.drop(columns=columns)
-    print("Columns removed:", columns)
     return df
 
 
 # Function to rename the columns of the DataFrame based on the provided dictionary
 def rename_columns(df, rename_dict):
     df = df.rename(columns=rename_dict)
-    print("Columns renamed:", list(rename_dict.values()))
     return df
 
 
@@ -32,14 +29,12 @@ def rename_columns(df, rename_dict):
 def convert_code_postal(df):
     df['code_postal'] = df['code_postal'].replace({'2A': 201, '2B': 202}).astype(int)
     df['code_postal'] = df['code_postal'].astype(str).apply(lambda x: x.zfill(2))
-    print("Postal codes converted.")
     return df
 
 
 # Function to exclude certain departments from the DataFrame based on the provided exclusion list
 def exclude_departments(df, exclude_list, code_column='code_postal'):
     df_filtered = df[~df[code_column].isin(exclude_list)]
-    print(f"Departments excluded. Remaining rows: {df_filtered.shape[0]}")
     return df_filtered
 
 
@@ -69,8 +64,8 @@ def rename(df):
 
 
 # Function to remove columns that start with 'N°Panneau' from the DataFrame
-def remove_candidate_pannel_number(df):
-    columns_to_drop = [col for col in df.columns if col.startswith('N°Panneau')]
+def remove_column_by_name(df, column_name):
+    columns_to_drop = [col for col in df.columns if col.startswith(column_name)]
 
     df = df.drop(columns=columns_to_drop)
 
@@ -98,7 +93,9 @@ def main():
     # Rename unnamed columns
     df = rename(df)
     # Remove 'N°Panneau' columns
-    df = remove_candidate_pannel_number(df)
+    df = remove_column_by_name(df, "N°Panneau")
+    # Remove 'Prénom' columns
+    df = remove_column_by_name(df, "Prénom")
 
     # Print the first few rows of the DataFrame to check the result
     print(df.head())
