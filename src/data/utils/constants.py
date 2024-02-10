@@ -97,7 +97,6 @@ departement_dict = {
     "95": "Val-d'Oise",
 }
 
-
 party_dict = {
     "MACRON": "La République En Marche",
     "LE PEN": "Rassemblement National",
@@ -111,4 +110,16 @@ party_dict = {
     "PÉCRESSE": "Les Républicains",
     "POUTOU": "Nouveau Parti Anticapitaliste",
     "DUPONT-AIGNAN": "Debout La France"
+}
+
+rename_election_columns = {
+    "Code du département": "code_postal",
+    "Libellé du département": "departement",
+    "N°Panneau": "N°Panneau 1",
+    "Sexe": "Sexe 1",
+    "Nom": "Parti 1",
+    "Prénom": "Prénom 1",
+    "Voix": "Voix 1",
+    "% Voix/Ins": "% Voix/Ins 1",
+    "% Voix/Exp": "% Voix/Exp 1"
 }
