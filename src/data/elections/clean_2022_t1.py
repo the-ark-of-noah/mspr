@@ -74,33 +74,40 @@ def remove_column_by_name(df, column_name):
 
 # Main function that orchestrates the execution of the script
 def main():
-    filepath = "../../../data/raw/2022_resultats_par_burvot_tour_1.csv"
+    # Paths for both tour 1 and tour 2 files
+    filepaths = ["../../../data/raw/2022_resultats_par_burvot_tour_1.csv",
+                 "../../../data/raw/2022_resultats_par_burvot_tour_2.csv"]
     columns_to_remove = ["Code de la circonscription", "Libellé de la circonscription", "Code de la commune"]
     exclude_drom_tom = ["ZA", "ZB", "ZC", "ZD", "ZM", "ZN", "ZP", "ZS", "ZW", "ZX", "ZZ"]
 
-    # Load the data
-    df = load_data(filepath)
-    # Remove unnecessary columns
-    df = remove_columns(df, columns_to_remove)
-    # Rename columns
-    df = rename_columns(df, rename_election_columns)
-    # Exclude certain departments
-    df = exclude_departments(df, exclude_drom_tom, "code_postal")
-    # Convert postal codes
-    df = convert_code_postal(df)
-    # Replace candidate names with parties
-    df = replace_candidate_names_with_parties(df, party_dict)
-    # Rename unnamed columns
-    df = rename(df)
-    # Remove 'N°Panneau' columns
-    df = remove_column_by_name(df, "N°Panneau")
-    # Remove 'Prénom' columns
-    df = remove_column_by_name(df, "Prénom")
+    for filepath in filepaths:
+        # Load the data
+        df = load_data(filepath)
+        # Remove unnecessary columns
+        df = remove_columns(df, columns_to_remove)
+        # Rename columns
+        df = rename_columns(df, rename_election_columns)
+        # Exclude certain departments
+        df = exclude_departments(df, exclude_drom_tom, "code_postal")
+        # Convert postal codes
+        df = convert_code_postal(df)
+        # Replace candidate names with parties
+        df = replace_candidate_names_with_parties(df, party_dict)
+        # Rename unnamed columns
+        df = rename(df)
+        # Remove 'N°Panneau' columns
+        df = remove_column_by_name(df, "N°Panneau")
+        # Remove 'Prénom' columns
+        df = remove_column_by_name(df, "Prénom")
 
-    # Print the first few rows of the DataFrame to check the result
-    print(df.head())
-    # Write the cleaned data to a CSV file
-    write_to_csv(df, "2022_elections_t1_cleaned")
+        # Print the first few rows of the DataFrame to check the result
+        print(df.head())
+
+        # Get the file name from the file path
+        file_name = filepath.split('/')[-1]
+
+        # Write the cleaned data to a CSV file
+        write_to_csv(df, file_name.replace('2022_resultats_par_burvot', '2022_elections').replace('.csv', '_cleaned'))
 
 
 if __name__ == "__main__":
