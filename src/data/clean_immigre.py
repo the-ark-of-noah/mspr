@@ -3,7 +3,7 @@ import pandas as pd
 file_path = "../../data/raw/2021_2022_immigre_departement.xlsx"
 
 # Charger les feuilles avec les corrections sur les noms de colonnes
-df_immigres = pd.read_excel(file_path, sheet_name="Figure 1", skiprows=2, usecols=["Numéro du département", "Libellé du département", "Part d'immigrés "]) # Ajout d'un espace car le nom n'est pas correct
+df_immigres = pd.read_excel(file_path, sheet_name="Figure 1", skiprows=2, usecols=["Numéro du département", "Libellé du département", "Part d'immigrés "]) # Ajout d'un espace, car le nom n'est pas correct
 df_descendants = pd.read_excel(file_path, sheet_name="Figure 2", skiprows=2, usecols=["Numéro du département", "Libellé du département", "Part de descendants d’immigrés"])
 
 # Renommer les colonnes pour la clarté
