@@ -8,7 +8,7 @@ def main():
 
 def clean_data():
     folder_path = "../../data/raw/"
-    file = open(f"{folder_path}sl_etc_2023T3.xls", "rb")
+    file = open(f"{folder_path}taux_de_chomage.xls", "rb")
     data = pd.read_excel(file, sheet_name="Département", header=3)
     years = range(1982, 2024)
     # create empty dataframe

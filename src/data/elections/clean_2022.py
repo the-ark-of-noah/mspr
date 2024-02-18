@@ -2,7 +2,7 @@ import pandas as pd
 
 # Importing necessary functions from the project's modules
 from src.data.utils.map_parties import replace_candidate_names_with_parties
-from src.data.utils.export_files import write_to_csv
+from src.data.utils.write_to_csv import write_to_csv
 from src.data.utils.constants import party_dict
 from src.data.utils.constants import rename_election_columns
 
@@ -108,6 +108,8 @@ def main():
 
         # Write the cleaned data to a CSV file
         write_to_csv(df, file_name.replace('2022_resultats_par_burvot', '2022_elections').replace('.csv', '_cleaned'))
+
+
 
 
 if __name__ == "__main__":
