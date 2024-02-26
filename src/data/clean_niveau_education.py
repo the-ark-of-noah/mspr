@@ -1,5 +1,6 @@
 import pandas as pd
 
+# Charger le fichier CSV dans un DataFrame
 df = pd.read_csv('../../data/raw/2020_niveau_education.csv', low_memory=False)
 
 # Drop columns
@@ -16,6 +17,9 @@ df.rename(columns={
     'Code': 'code_postal',
     'Libellé': 'departement'
 }, inplace=True)
+
+# Supprimer les lignes avec les codes postaux 971 et 972
+df = df[~df['code_postal'].isin(['971', '972', '973', '974', '976'])]
 
 # Set age
 df['Âge'] = '15-26'
@@ -36,6 +40,12 @@ for index, row in df.iterrows():
 
 # Create new dataframe
 new_df = pd.DataFrame(new_rows)
+
+# Convertir les numéros pour la Corse
+new_df["code_postal"] = new_df["code_postal"].replace(
+    {'2A': "201", '2B': "202"})
+
+new_df['code_postal'] = new_df['code_postal'].astype(int)
 
 output_path = "../../data/processed/niveau_education.csv"
 new_df.to_csv(output_path, index=False)
