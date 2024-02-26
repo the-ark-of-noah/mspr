@@ -11,14 +11,21 @@ def clean_data():
     file = open(f"{folder_path}taux_de_chomage.xls", "rb")
     data = pd.read_excel(file, sheet_name="Département", header=3)
     years = range(1982, 2024)
-    # create empty dataframe
-    result = pd.DataFrame(data=data["Libellé"])
+
+    # Convertit en majuscules et supprime les espaces
+    data["Libellé"] = data["Libellé"].str.upper().str.strip()
+
+    # Supprime les colonnes inutiles, dont les DROM-TOM
+    data = data.iloc[:-8]
+
+    # Préparation du DataFrame résultant
+    result = pd.DataFrame(data=data["Libellé"].rename("departement"))
 
     for year in years:
         avg = calculate_avg(data, year)
         result[f"avg_{year}"] = avg
 
-    print(result.head(10))
+    print(result.dtypes)
     write_to_csv(result, "moyenne_taux_chomage_par_departement_1982_2023")
 
 
@@ -29,7 +36,7 @@ def calculate_avg(data: pd.DataFrame, year):
         if column in data.columns:
             df[column] = data[column]
 
-    avg = df.sum(axis=1) / 4
+    avg = df.mean(axis=1)  # Moyenne pour les 4 trimestres
     return round(avg, 2)
 
 
