@@ -1,4 +1,5 @@
 import pandas as pd
+from utils.constants import departement_dict
 
 # Try reading the file with ISO-8859-1 encoding
 df = pd.read_csv('../../data/raw/2016_2023_delinquance.csv', low_memory=False, encoding='ISO-8859-1', decimal=',')
@@ -34,6 +35,10 @@ df = df.loc[df['code_postal'] > 0]
 
 # Convert code_postal value to double digit
 df['code_postal'] = df['code_postal'].astype(str).apply(lambda x: x.zfill(2))
+
+df['departement'] = 0
+# Créer une nouvelle colonne 'code_departement' en utilisant le dictionnaire de correspondance
+df['departement'] = df['code_postal'].map(departement_dict)
 
 output_path = "../../data/processed/delinquance_cleaned.csv"
 df.to_csv(output_path, index=False)
