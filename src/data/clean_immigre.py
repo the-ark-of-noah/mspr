@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 file_path = "../../data/raw/2021_2022_immigre_departement.xlsx"
 
@@ -22,7 +23,15 @@ df_combined = df_combined[~df_combined["Code_departement"].isin(['971', '972', '
 # Convertir et ajuster les numéros pour la Corse
 df_combined["Code_departement"] = df_combined["Code_departement"].replace({'2A': "201", '2B': "202"})
 
-print(df_combined.dtypes)
+df_combined = df_combined.rename(columns={'Code_departement': 'code_postal', 'Nom_departement': 'departement'})
+
+df_combined = df_combined[~df_combined["code_postal"].isin(
+    ['France hors Mayotte '])]
+
+df_combined['code_postal'] = df_combined['code_postal'].astype(int)
+
+# Utiliser replace avec une expression régulière pour remplacer les valeurs "ns" et "nd" avec ou sans espaces blancs autour
+df_combined['Part_descendants_immigres'] = df_combined['Part_descendants_immigres'].replace({'^\s*ns\s*$': np.nan, '^\s*nd\s*$': np.nan}, regex=True)
 
 # Sauvegarder le DataFrame combiné
 output_path = "../../data/processed/immigres_et_descendants_par_departement_2020_2021.csv"
