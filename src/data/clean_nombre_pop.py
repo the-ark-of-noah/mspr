@@ -20,17 +20,11 @@ df_nb_pop["Code_departement"] = df_nb_pop["Code_departement"].replace(
 
 print(df_nb_pop.dtypes)
 
-# Liste des colonnes à convertir en entier car elles sont numériques, et nous parlons du nombre de personnes
-colonnes_a_convertir = ['2023 (p)', '2020', '2015', '2010', '1999']
+df_nb_pop = df_nb_pop.rename(columns={'Code_departement': 'code_postal', 'Nom_departement': 'departement', '2023 (p)': '2023'})
 
-# Conversion des colonnes
-for colonne in colonnes_a_convertir:
-    # Convertir en int après avoir remplacé les valeurs NaN pour éviter les erreurs
-    df_nb_pop[colonne] = pd.to_numeric(df_nb_pop[colonne], errors='coerce').fillna(0).astype(int)
+df_nb_pop = df_nb_pop[~df_nb_pop['code_postal'].isin(['Moyenne métropolitaine'])]
 
-# Afficher les types pour vérification
-print(df_nb_pop.dtypes)
-
+df_nb_pop['code_postal'] = df_nb_pop['code_postal'].astype(int)
 
 output_path = "../../data/processed/population_par_departement_1999_2023.csv"
 df_nb_pop.to_csv(output_path, index=False)
