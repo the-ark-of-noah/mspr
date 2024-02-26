@@ -66,7 +66,6 @@ def rename(df):
 # Function to remove columns that start with 'N°Panneau' from the DataFrame
 def remove_column_by_name(df, column_name):
     columns_to_drop = [col for col in df.columns if col.startswith(column_name)]
-
     df = df.drop(columns=columns_to_drop)
 
     return df
@@ -100,8 +99,10 @@ def main():
         # Remove 'Prénom' columns
         df = remove_column_by_name(df, "Prénom")
 
-        # Print the first few rows of the DataFrame to check the result
-        print(df.head())
+        print(df.dtypes)
+
+        # # Print the first few rows of the DataFrame to check the result
+        # print(df.head())
 
         # Get the file name from the file path
         file_name = filepath.split('/')[-1]

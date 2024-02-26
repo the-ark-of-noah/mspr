@@ -37,6 +37,8 @@ df_filtre['departement'] = 0
 # Créer une nouvelle colonne 'code_departement' en utilisant le dictionnaire de correspondance
 df_filtre['departement'] = df_filtre['code_postal'].map(departement_dict)
 
+print(df_filtre.dtypes)
+
 # Sauvegarder le DataFrame combiné
 output_path = "../../data/processed/niveau_de_vie_par_departement_2021.csv"
 df_filtre.to_csv(output_path, index=False)

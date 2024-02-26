@@ -1,7 +1,7 @@
 import pandas as pd
 from utils.constants import departement_dict
 
-df = pd.read_csv('../../data/raw/PIB par habitant.csv', low_memory=False, decimal=',')
+df = pd.read_csv('../../data/raw/PIB_par_habitant.csv', low_memory=False, decimal=',')
 
 # Inverser le dictionnaire pour obtenir un mapping des codes aux noms de département
 code_departement_dict = {v: k for k, v in departement_dict.items()}
