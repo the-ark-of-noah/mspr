@@ -1,4 +1,5 @@
 import pandas as pd
+from utils.constants import departement_dict
 
 # Chemin du fichier
 file_path = "../../data/raw/2021_niveau_de_vie.xlsx"
@@ -30,7 +31,11 @@ df_filtre = df_filtre[~df_filtre["Code"].isin(['971', '972', '973', '974', '976'
 # Convertir et ajuster les numéros pour la Corse
 df_filtre["Code"] = df_filtre["Code"].replace({'2A': "201", '2B': "202"})
 
-print(df_filtre.dtypes)
+df_filtre = df_filtre.rename(columns={'Code': 'code_postal'})
+
+df_filtre['departement'] = 0
+# Créer une nouvelle colonne 'code_departement' en utilisant le dictionnaire de correspondance
+df_filtre['departement'] = df_filtre['code_postal'].map(departement_dict)
 
 # Sauvegarder le DataFrame combiné
 output_path = "../../data/processed/niveau_de_vie_par_departement_2021.csv"
