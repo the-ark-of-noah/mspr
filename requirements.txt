@@ -2,10 +2,13 @@
 -e .
 
 # external requirements
-setuptools~=69.0.3
-numpy
-pandas
+setuptools~=68.0.0
+numpy~=1.26.3
+pandas~=2.1.4
 scikit-learn
 jupyter
 xlrd
 openpyxl
+pathlib~=1.0.1
+click~=8.1.7
+python-dotenv~=0.21.0

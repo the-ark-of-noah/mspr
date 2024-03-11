@@ -1,6 +1,6 @@
 import sys
 import pandas as pd
-
+from utils.constants import departement_dict
 
 def main():
     clean_data()
@@ -20,6 +20,19 @@ def clean_data():
 
     # Préparation du DataFrame résultant
     result = pd.DataFrame(data=data["Libellé"].rename("departement"))
+
+    result['departement'] = result['departement'].str.lower()
+
+    # Inverser le dictionnaire pour obtenir un mapping des codes aux noms de département
+    import unidecode
+
+    code_departement_dict = {unidecode.unidecode(v.lower()): unidecode.unidecode(k.lower()) for k, v in departement_dict.items()}
+
+    # Créer une nouvelle colonne 'code_departement' en utilisant le dictionnaire de correspondance
+    result['code_departement'] = result['departement'].map(code_departement_dict)
+
+    # Convertir et ajuster les numéros pour la Corse
+    result["code_departement"] = result["code_departement"].replace({'2a': "201", '2b': "202"})
 
     for year in years:
         avg = calculate_avg(data, year)
