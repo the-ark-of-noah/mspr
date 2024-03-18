@@ -14,7 +14,7 @@ def load_data(filepath):
 
 # Function to remove specified columns from the DataFrame
 def remove_columns(df, columns):
-    df = df.drop(columns=columns)
+    df = df.drop(columns=columns, errors='ignore')
     return df
 
 
@@ -26,8 +26,8 @@ def rename_columns(df, rename_dict):
 
 # Function to convert the postal codes in the DataFrame
 def convert_code_postal(df):
-    df['code_postal'] = df['code_postal'].replace({'2A': 201, '2B': 202}).astype(int)
-    df['code_postal'] = df['code_postal'].astype(str).apply(lambda x: x.zfill(2))
+    df['code_postal'] = df['code_postal'].replace({'2A': '201', '2B': '202'})
+    df['code_postal'] = df['code_postal'].str.zfill(5)
     return df
 
 
@@ -65,7 +65,7 @@ def rename(df):
 # Function to remove columns that start with 'N°Panneau' from the DataFrame
 def remove_column_by_name(df, column_name):
     columns_to_drop = [col for col in df.columns if col.startswith(column_name)]
-    df = df.drop(columns=columns_to_drop)
+    df = df.drop(columns=columns_to_drop, errors='ignore')
 
     return df
 
@@ -73,18 +73,17 @@ def remove_column_by_name(df, column_name):
 # Main function that orchestrates the execution of the script
 def main():
     # Paths for both tour 1 and tour 2 files
-    filepaths = ["../../../data/2022_resultats_par_burvot_tour_1.csv"]
+    filepaths = ["../../../data/raw/2022_resultats_par_burvot_tour_1.csv"]
     columns_to_remove = ["Code de la circonscription", "Libellé de la circonscription", "Code de la commune"]
     exclude_drom_tom = ["ZA", "ZB", "ZC", "ZD", "ZM", "ZN", "ZP", "ZS", "ZW", "ZX", "ZZ"]
 
-    # aggregats de colonnes
-    groups = {}
-    for i in range(1, 13):
-        groups[f"Parti {i}"] = "first"
-        groups[f"% Voix/Ins {i}"] = "mean"
-        groups[f"% Voix/Exp {i}"] = "mean"
+    # Aggregates de colonnes
+    groups = {f"Parti {i}": "first" for i in range(1, 13)}
+    groups.update({f"% Voix/Ins {i}": "mean" for i in range(1, 13)})
+    groups.update({f"% Voix/Exp {i}": "mean" for i in range(1, 13)})
 
     aggregates = {
+        'code_postal': 'first',
         'Inscrits': 'sum',
         'Abstentions': 'sum',
         'Votants': 'sum',
@@ -114,18 +113,13 @@ def main():
         # Remove 'Prénom' columns
         df = remove_column_by_name(df, "Prénom")
 
-        # group by commune name and apply aggregates
-        df = df.groupby('Libellé de la commune').agg(aggregates).reset_index()
+        # Ajoutez la colonne 'code_postal' dans les colonnes utilisées pour le regroupement
+        df = df.groupby(['Libellé de la commune']).agg(aggregates).reset_index()
 
-        # add winenr col
+        # Add winner column
         commune_winner_id = df[[f"% Voix/Ins {i}" for i in range(1, 13)]].idxmax(axis=1).apply(
             lambda x: x.split(" ")[2])
         df['winner'] = commune_winner_id.apply(lambda x: id_to_party_dict.get(int(x)))
-
-        print(df.dtypes)
-
-        # # Print the first few rows of the DataFrame to check the result
-        # print(df.head())
 
         # Get the file name from the file path
         file_name = filepath.split('/')[-1]
