@@ -3,8 +3,7 @@ import pandas as pd
 # Importing necessary functions from the project's modules
 from src.data.utils.map_parties import replace_candidate_names_with_parties
 from src.data.utils.write_to_csv import write_to_csv
-from src.data.utils.constants import party_dict
-from src.data.utils.constants import rename_election_columns
+from src.data.utils.constants import party_dict, id_to_party_dict, rename_election_columns
 
 
 # Function to load data from a CSV file into a pandas DataFrame
@@ -74,10 +73,26 @@ def remove_column_by_name(df, column_name):
 # Main function that orchestrates the execution of the script
 def main():
     # Paths for both tour 1 and tour 2 files
-    filepaths = ["../../../data/raw/2022_resultats_par_burvot_tour_1.csv",
-                 "../../../data/raw/2022_resultats_par_burvot_tour_2.csv"]
+    filepaths = ["../../../data/raw/2022_resultats_par_burvot_tour_1.csv"]
     columns_to_remove = ["Code de la circonscription", "Libellé de la circonscription", "Code de la commune"]
     exclude_drom_tom = ["ZA", "ZB", "ZC", "ZD", "ZM", "ZN", "ZP", "ZS", "ZW", "ZX", "ZZ"]
+
+    # aggregats de colonnes
+    groups = {}
+    for i in range(1, 13):
+        groups[f"Parti {i}"] = "first"
+        groups[f"% Voix/Ins {i}"] = "mean"
+        groups[f"% Voix/Exp {i}"] = "mean"
+
+    aggregates = {
+        'Inscrits': 'sum',
+        'Abstentions': 'sum',
+        'Votants': 'sum',
+        'Blancs': 'sum',
+        'Nuls': 'sum',
+        'Exprimés': 'sum',
+        **groups
+    }
 
     for filepath in filepaths:
         # Load the data
@@ -99,6 +114,14 @@ def main():
         # Remove 'Prénom' columns
         df = remove_column_by_name(df, "Prénom")
 
+        # group by commune name and apply aggregates
+        df = df.groupby('Libellé de la commune').agg(aggregates).reset_index()
+
+        # add winenr col
+        commune_winner_id = df[[f"% Voix/Ins {i}" for i in range(1, 13)]].idxmax(axis=1).apply(
+            lambda x: x.split(" ")[2])
+        df['winner'] = commune_winner_id.apply(lambda x: id_to_party_dict.get(int(x)))
+
         print(df.dtypes)
 
         # # Print the first few rows of the DataFrame to check the result
@@ -109,8 +132,6 @@ def main():
 
         # Write the cleaned data to a CSV file
         write_to_csv(df, file_name.replace('2022_resultats_par_burvot', '2022_elections').replace('.csv', '_cleaned'))
-
-
 
 
 if __name__ == "__main__":
