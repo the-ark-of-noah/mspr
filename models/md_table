@@ -1,0 +1,224 @@
+classDiagram
+direction BT
+class demographie {
+   double precision 65-99_2020
+   double precision 60-99_2023
+   double precision 25-59_2023
+   double precision 0-24_2023
+   double precision 0-25_2020
+   double precision 25-64_2020
+   integer code_postal
+   double precision 2023
+   Part dans la population française (p) (en %) double precision
+   double precision 2020
+   double precision 2015
+   integer 2010
+   integer 1999
+   integer an
+   double precision dens_pop
+   bigint id_demographie
+}
+class economie {
+   double precision avg_1982
+   double precision avg_1983
+   double precision avg_1984
+   double precision avg_1985
+   double precision avg_1986
+   double precision avg_1987
+   double precision avg_1988
+   double precision avg_1989
+   double precision avg_1990
+   double precision avg_1991
+   double precision avg_1992
+   double precision avg_1993
+   double precision avg_1994
+   double precision avg_1995
+   double precision avg_1996
+   double precision avg_1997
+   double precision avg_1998
+   double precision avg_1999
+   double precision avg_2000
+   double precision avg_2001
+   double precision avg_2002
+   double precision avg_2003
+   double precision avg_2004
+   double precision avg_2005
+   double precision avg_2006
+   double precision avg_2007
+   double precision avg_2008
+   double precision avg_2009
+   double precision avg_2010
+   double precision avg_2011
+   double precision avg_2012
+   double precision avg_2013
+   double precision avg_2014
+   double precision avg_2015
+   double precision avg_2016
+   double precision avg_2017
+   double precision avg_2018
+   double precision avg_2019
+   double precision avg_2020
+   double precision avg_2021
+   double precision avg_2022
+   double precision avg_2023
+   integer code_postal
+   integer Nb de ménages fiscaux 2021
+   integer Médiane du niveau de vie 2021
+   double precision Part des minima sociaux dans le rev. disp. 2021
+   double precision Part des prestations familiales dans le rev. disp. 2021
+   double precision Part des prestations sociales dans le rev. disp. 2021
+   double precision Part des prestations logement dans le rev. disp. 2021
+   double precision Part des indemnités de chômage dans le rev. disp. 2021
+   integer 2022
+   integer 2005
+   integer 2000
+   bigint id_economie
+}
+class election_2022_t1 {
+   integer code_postal
+   varchar Libellé de la commune
+   varchar Code du b.vote
+   integer Inscrits
+   integer Abstentions
+   double precision % Abs/Ins
+   integer Votants
+   double precision % Vot/Ins
+   integer Blancs
+   double precision % Blancs/Ins
+   double precision % Blancs/Vot
+   integer Nuls
+   double precision % Nuls/Ins
+   double precision % Nuls/Vot
+   integer Exprimés
+   double precision % Exp/Ins
+   double precision % Exp/Vot
+   varchar Sexe 1
+   varchar Parti 1
+   integer Voix 1
+   double precision % Voix/Ins 1
+   double precision % Voix/Exp 1
+   varchar Sexe 2
+   varchar Parti 2
+   integer Voix 2
+   double precision % Voix/Ins 2
+   double precision % Voix/Exp 2
+   varchar Sexe 3
+   varchar Parti 3
+   integer Voix 3
+   double precision % Voix/Ins 3
+   double precision % Voix/Exp 3
+   varchar Sexe 4
+   varchar Parti 4
+   integer Voix 4
+   double precision % Voix/Ins 4
+   double precision % Voix/Exp 4
+   varchar Sexe 5
+   varchar Parti 5
+   integer Voix 5
+   double precision % Voix/Ins 5
+   double precision % Voix/Exp 5
+   varchar Sexe 6
+   varchar Parti 6
+   integer Voix 6
+   double precision % Voix/Ins 6
+   double precision % Voix/Exp 6
+   varchar Sexe 7
+   varchar Parti 7
+   integer Voix 7
+   double precision % Voix/Ins 7
+   double precision % Voix/Exp 7
+   varchar Sexe 8
+   varchar Parti 8
+   integer Voix 8
+   double precision % Voix/Ins 8
+   double precision % Voix/Exp 8
+   varchar Sexe 9
+   varchar Parti 9
+   integer Voix 9
+   double precision % Voix/Ins 9
+   double precision % Voix/Exp 9
+   varchar Sexe 10
+   varchar Parti 10
+   integer Voix 10
+   double precision % Voix/Ins 10
+   double precision % Voix/Exp 10
+   varchar Sexe 11
+   varchar Parti 11
+   integer Voix 11
+   double precision % Voix/Ins 11
+   double precision % Voix/Exp 11
+   varchar Sexe 12
+   varchar Parti 12
+   integer Voix 12
+   double precision % Voix/Ins 12
+   double precision % Voix/Exp 12
+   bigint id_election_2022_t1
+}
+class election_2022_t2 {
+   integer code_postal
+   varchar Libellé de la commune
+   varchar Code du b.vote
+   integer Inscrits
+   integer Abstentions
+   double precision % Abs/Ins
+   integer Votants
+   double precision % Vot/Ins
+   integer Blancs
+   double precision % Blancs/Ins
+   double precision % Blancs/Vot
+   integer Nuls
+   double precision % Nuls/Ins
+   double precision % Nuls/Vot
+   integer Exprimés
+   double precision % Exp/Ins
+   double precision % Exp/Vot
+   varchar Sexe 1
+   varchar Parti 1
+   integer Voix 1
+   double precision % Voix/Ins 1
+   double precision % Voix/Exp 1
+   varchar Sexe 2
+   varchar Parti 2
+   integer Voix 2
+   double precision % Voix/Ins 2
+   double precision % Voix/Exp 2
+   bigint id_election_2022_t2
+}
+class geographie {
+   integer code_postal
+   varchar departement
+   integer id_securite
+   integer id_demographie
+   integer id_economie
+   integer id_social
+   integer id_election_2022_t1
+   integer id_election_2022_t2
+   bigint id_geographie
+}
+class securite {
+   varchar classe
+   integer annee
+   integer code_postal
+   integer faits
+   double precision tauxpourcent
+   bigint id_securite
+}
+class social {
+   integer code_postal
+   integer annee
+   varchar age
+   varchar indicateur
+   varchar valeurs
+   integer an
+   double precision taux
+   double precision Part_immigres
+   double precision Part_descendants_immigres
+   bigint id_social
+}
+
+geographie  -->  demographie : id_securite:id_demographie
+geographie  -->  economie : id_securite:id_economie
+geographie  -->  election_2022_t1 : id_securite:id_election_2022_t1
+geographie  -->  election_2022_t2 : id_securite:id_election_2022_t2
+geographie  -->  securite : id_securite
+geographie  -->  social : id_securite:id_social
