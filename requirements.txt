@@ -4,7 +4,7 @@
 # external requirements
 setuptools~=68.0.0
 numpy~=1.26.3
-pandas~=2.1.4
+pandas~=2.2.1
 scikit-learn
 jupyter
 xlrd

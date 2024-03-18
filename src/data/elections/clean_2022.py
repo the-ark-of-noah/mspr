@@ -73,7 +73,7 @@ def remove_column_by_name(df, column_name):
 # Main function that orchestrates the execution of the script
 def main():
     # Paths for both tour 1 and tour 2 files
-    filepaths = ["../../../data/raw/2022_resultats_par_burvot_tour_1.csv"]
+    filepaths = ["../../../data/2022_resultats_par_burvot_tour_1.csv"]
     columns_to_remove = ["Code de la circonscription", "Libellé de la circonscription", "Code de la commune"]
     exclude_drom_tom = ["ZA", "ZB", "ZC", "ZD", "ZM", "ZN", "ZP", "ZS", "ZW", "ZX", "ZZ"]
 
