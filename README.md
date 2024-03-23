@@ -1,7 +1,7 @@
-mspr
+Mspr 2024 - Projet de prédiction des tendances électorales
 ==============================
 
-A short description of the project.
+L'objectif de ce projet est de faire un POC visant à prédire les tendances électorales en France. Pour cela, nous allons utiliser les données des élections précédentes pour prédire les résultats des prochaines élections.
 
 Project Organization
 ------------
@@ -61,5 +61,22 @@ pip install -r requirements.txt
 ```
 
 Le dossier `data` n'est pas présent dans le repository, il faut donc le créer et intégrer son arborescence.
+
+# Utilisation
+
+Pour utiliser le projet, il faut commencer par executer docker-compose pour lancer la base de données. Pour cela, il faut lancer la commande suivante :
+```bash
+docker-compose up
+```
+
+Ensuite, il faut récupérer le fichier Knime `mspr.knwf` et le lancer. Il va générer les tables nécessaires pour l'entraînement et la prédiction des modèles.
+
+Enfin, il faut lancer les scripts python pour entraîner et prédire les modèles. Pour cela, il faut lancer les commandes suivantes :
+```bash
+# A modifier 
+python src/models/train_model.py
+python src/models/predict_model.py
+```
+
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
