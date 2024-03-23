@@ -12,3 +12,4 @@ openpyxl
 pathlib~=1.0.1
 click~=8.1.7
 python-dotenv~=0.21.0
+psycopg2-binary
