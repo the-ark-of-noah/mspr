@@ -138,3 +138,11 @@ rename_election_columns = {
     "% Voix/Ins": "% Voix/Ins 1",
     "% Voix/Exp": "% Voix/Exp 1"
 }
+
+conn_params = {
+    "host": "localhost",
+    "port": "15432",
+    "database": "postgres",
+    "user": "admin",
+    "password": "admin"
+}
