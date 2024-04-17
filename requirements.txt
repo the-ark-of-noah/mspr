@@ -1,21 +1,31 @@
-# local package
--e .
-
-# external requirements
+# Infrastructure de base
 setuptools~=68.0.0
-numpy~=1.26.3
-pandas~=2.2.1
-scikit-learn
-jupyter
-xlrd
-openpyxl
 pathlib~=1.0.1
 click~=8.1.7
+
+# Manipulation et analyse de données
+numpy~=1.26.3
+pandas~=2.2.1
+xlrd
+openpyxl
 python-dotenv~=0.21.0
-psycopg2-binary
 joblib
+
+# Visualisation de données
 matplotlib
-sqlalchemy~=2.0.28
+seaborn
+
+# Modélisation et calcul scientifique
+scikit-learn
 xgboost
 
+# Interaction avec la base de données
+psycopg2-binary
+sqlalchemy~=2.0.28
+
+# Autres utilitaires
+jupyter
+
+# Dépendances du projet local
+-e .
 src~=0.1.0
