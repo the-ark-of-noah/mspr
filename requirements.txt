@@ -16,5 +16,6 @@ psycopg2-binary
 joblib
 matplotlib
 sqlalchemy~=2.0.28
+xgboost
 
 src~=0.1.0
